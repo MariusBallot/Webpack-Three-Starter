@@ -1,15 +1,16 @@
 # Webpack-Three-Starter :computer: :ocean:
-A simple webpack starter for 
+A simple webpack starter for three.js experiments
 
 ## Requirements
 ```
 NPM
-Webpack 4.0
+Webpack 3.0 and up
 ```
 
 ## Usage
 ```
-npm i mb-webpack-starter
+git clone https://github.com/MariusBallot/Webpack-Three-Starter.git
+npm i
 ```
 
 ### Dev mode
