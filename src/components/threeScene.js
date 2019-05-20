@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import OrbitControls from 'orbit-controls-es6';
-
+import vertSource from '../shaders/cube.vert'
+import fragSource from '../shaders/cube.frag'
 
 class ThreeScene {
 
@@ -10,6 +11,7 @@ class ThreeScene {
         this.renderer
         this.cube
         this.controls
+        this.uniforms
         this.bind()
         this.init();
     }
@@ -28,7 +30,17 @@ class ThreeScene {
         this.controls.maxDistance = 1500;
         this.controls.minDistance = 0;
 
-        this.cube = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshNormalMaterial())
+        this.uniforms = {
+            colorB: { type: 'vec3', value: new THREE.Color(0xACB6E5) },
+            colorA: { type: 'vec3', value: new THREE.Color(0x74ebd5) }
+        }
+
+        this.cube = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.ShaderMaterial({
+            uniforms: this.uniforms,
+            vertexShader: vertSource,
+            fragmentShader: fragSource
+
+        }))
         this.scene.add(this.cube)
 
 
