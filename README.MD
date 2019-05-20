@@ -1,4 +1,4 @@
-# Webpack-Three-Starter :computer: :ocean:
+# :computer: Webpack-Three-Starter :ocean:
 A simple webpack starter for three.js experiments
 
 ## Requirements
