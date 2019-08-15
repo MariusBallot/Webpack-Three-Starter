@@ -45,7 +45,7 @@ class ThreeScene {
 
     let light = new THREE.AmbientLight();
     let pointLight = new THREE.PointLight();
-    pointLight.position.set(10, 10);
+    pointLight.position.set(10, 10, 0);
     this.scene.add(light, pointLight);
   }
 
