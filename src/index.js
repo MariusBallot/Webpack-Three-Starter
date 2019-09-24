@@ -1,5 +1,5 @@
 import './sass/index.scss';
-import ThreeScene from './components/threeScene'
+import ThreeScene from './components/ThreeScene'
 
 const threeScene = new ThreeScene();
 
