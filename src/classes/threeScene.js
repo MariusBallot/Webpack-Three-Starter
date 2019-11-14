@@ -10,12 +10,6 @@ import OrbitControls from "orbit-controls-es6"
 import vertSource from "../shaders/cube.vert"
 import fragSource from "../shaders/cube.frag"
 
-import CubeReactor from './CubeReactor'
-import Canvas from './Canvas'
-import Star from "./Star";
-
-import texUrl from '../assets/water.jpg'
-
 
 class ThreeScene {
   constructor() {
@@ -25,10 +19,8 @@ class ThreeScene {
     this.cube
     this.controls
     this.uniforms
-    this.myCanvas = new Canvas();
     this.stars = []
 
-    this.cubeReactor
 
     this.composer
     this.bloomPass
@@ -79,46 +71,14 @@ class ThreeScene {
       this.bloomPass.radius = Number(value);
     });
 
-    var texLoader = new THREE.TextureLoader()
-    var water = texLoader.load(texUrl)
-
-    this.uniforms = {
-      colorB: {
-        type: "vec3",
-        value: new THREE.Color(0xacb6e5)
-      },
-      colorA: {
-        type: "vec3",
-        value: new THREE.Color(0x74ebd5)
-      },
-      texture1: {
-        type: "t",
-        value: water
-      }
-    }
-
-    this.cube = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.ShaderMaterial({ uniforms: this.uniforms, vertexShader: vertSource, fragmentShader: fragSource }))
-    //this.scene.add(this.cube)
-
     let light = new THREE.AmbientLight()
     let pointLight = new THREE.PointLight()
     pointLight.position.set(10, 10, 0)
     this.scene.add(light, pointLight)
-
-    for (let i = 0; i < 30; i++) {
-      this.stars.push(new Star(this.scene));
-    }
-
-    this.cubeReactor = new CubeReactor(this.scene)
   }
 
   update() {
     this.composer.render();
-    this.stars.forEach(star => {
-      star.move()
-    });
-
-    this.cubeReactor.move();
   }
 
 
