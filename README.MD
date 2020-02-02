@@ -4,7 +4,6 @@
 <img src="https://developers.cloudflare.com/logos/threejs.svg" width="100">
 
 A simple webpack starter for three.js experiments.<br>
-Using RAF from the amazing LOL.js library
 
 ## Requirements
 ```
