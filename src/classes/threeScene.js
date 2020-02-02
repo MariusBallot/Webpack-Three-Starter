@@ -4,27 +4,20 @@ import { GUI } from "three/examples/jsm/libs/dat.gui.module.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-
-import OrbitControls from "orbit-controls-es6"
-import vertSource from "../shaders/cube.vert"
-import fragSource from "../shaders/cube.frag"
-
+import RAF from '../utils/raf'
 
 class ThreeScene {
   constructor() {
+    this.bind()
     this.camera
     this.scene
     this.renderer
-    this.cube
     this.controls
-    this.uniforms
-    this.stars = []
-
 
     this.composer
     this.bloomPass
-    this.bind()
     this.init()
   }
 
@@ -50,13 +43,22 @@ class ThreeScene {
     this.bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 3, 1, 0.9);
     this.composer.addPass(this.bloomPass);
 
+    let light = new THREE.AmbientLight()
+    let pointLight = new THREE.PointLight()
+    pointLight.position.set(10, 10, 0)
+    this.scene.add(light, pointLight)
+
+    this.myGUI()
+  }
+
+  myGUI() {
+
     var params = {
       exposure: 1,
       bloomStrength: 1.5,
       bloomThreshold: 0,
       bloomRadius: 0
     };
-
     var gui = new GUI();
 
     gui.add(params, "bloomThreshold", 0.0, 1.0).onChange(value => {
@@ -70,11 +72,6 @@ class ThreeScene {
     gui.add(params, "bloomRadius", 0.0, 1.0).step(0.01).onChange(value => {
       this.bloomPass.radius = Number(value);
     });
-
-    let light = new THREE.AmbientLight()
-    let pointLight = new THREE.PointLight()
-    pointLight.position.set(10, 10, 0)
-    this.scene.add(light, pointLight)
   }
 
   update() {
@@ -90,7 +87,10 @@ class ThreeScene {
 
   bind() {
     this.resizeCanvas = this.resizeCanvas.bind(this)
+    this.update = this.update.bind(this)
+
     window.addEventListener("resize", this.resizeCanvas)
+    RAF.subscribe('threeSceneUpdate', this.update)
   }
 }
 
